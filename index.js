@@ -8,7 +8,7 @@ app.use(express.json());
 
 const db = mysql.createConnection({
     user: 'u343108560_sistemabins',
-    host: 'sql500.main-hosting.eu',
+    host: '31.220.16.1',
     password: 'Binsgato@123',
     database: 'u343108560_sistemabins'
 });
@@ -84,7 +84,7 @@ app.get('/getPageStores', (req, res) => {
 })
 //----------- BUSCA ESTADOS -------------------------
 app.get('/getStates', (req, res) => {
-    const sql = 'SELECT DISTINCT ESTADO FROM STORES ORDER BY ESTADO;'
+    const sql = 'SELECT DISTINCT ESTADO FROM stores ORDER BY ESTADO;'
 
     db.query(sql, (err, result) => {
         if (err) {
@@ -97,7 +97,7 @@ app.get('/getStates', (req, res) => {
 //---------- BUSCA CIDADES --------------------------
 app.get('/getCities', (req, res) => {
     const uf = req.query.uf
-    const sql = `SELECT DISTINCT CIDADE, ESTADO FROM STORES WHERE ESTADO = '${uf}' ORDER BY CIDADE;`
+    const sql = `SELECT DISTINCT CIDADE, ESTADO FROM stores WHERE ESTADO = '${uf}' ORDER BY CIDADE;`
 
     db.query(sql, (err, result) => {
         if (err) {
@@ -124,7 +124,7 @@ app.get('/getStores', (req, res) => {
 app.post('/store', (req, res) => {
     const params = montaParametros(req.body.params);
     
-    const sql = 'INSERT INTO STORES (NOMESOCIAL, NOMEFANTASIA, LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO, CIDADE, ESTADO, CEP, TELEFONE, WHATSAPP, INSTAGRAM, FACEBOOK, PONTOTROCA) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    const sql = 'INSERT INTO stores (NOMESOCIAL, NOMEFANTASIA, LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO, CIDADE, ESTADO, CEP, TELEFONE, WHATSAPP, INSTAGRAM, FACEBOOK, PONTOTROCA) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
 
     db.query(sql, [  
         params.NOMESOCIAL,
@@ -154,7 +154,7 @@ app.post('/store', (req, res) => {
 app.post('/updateStore', (req, res) => {
 
     const params = montaParametros(req.body.params);
-    const sql = 'UPDATE STORES SET NOMESOCIAL = ?, NOMEFANTASIA = ? , LOGRADOURO = ?, NUMERO = ? , COMPLEMENTO = ?, BAIRRO = ?, CIDADE = ?, ESTADO = ?, CEP = ?,TELEFONE = ?, WHATSAPP = ?, INSTAGRAM = ?, FACEBOOK = ?, PONTOTROCA = ? WHERE ID = ?'
+    const sql = 'UPDATE stores SET NOMESOCIAL = ?, NOMEFANTASIA = ? , LOGRADOURO = ?, NUMERO = ? , COMPLEMENTO = ?, BAIRRO = ?, CIDADE = ?, ESTADO = ?, CEP = ?,TELEFONE = ?, WHATSAPP = ?, INSTAGRAM = ?, FACEBOOK = ?, PONTOTROCA = ? WHERE ID = ?'
 
     db.query(sql, [  
         params.NOMESOCIAL,
@@ -185,7 +185,7 @@ app.post('/updateStore', (req, res) => {
 //------ DELETA LOJA -----------------
 app.post('/deleteStore', (req, res) => {
     const idStore = req.body.idStore
-    const sql = 'DELETE FROM STORES WHERE ID = ?';
+    const sql = 'DELETE FROM stores WHERE ID = ?';
 
     db.query(sql, [idStore], (err) => {
         if (err) {
